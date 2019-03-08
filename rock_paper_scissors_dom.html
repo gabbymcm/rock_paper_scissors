@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rock Paper Scissors</title>
+</head>
+<body>
+
+    <div class=container>
+        <button value="rock">Rock</button>
+        <button value="paper">Paper</button>
+        <button value="scissors">Scissors</button>
+    </div>
+
+    <div class=container id=scores></div>
+    <div class=container id=box></div>
+
+
+
+
+    <script>
+
+        /* game variables */
+        var computerScore = 0;
+        var playerScore = 0;
+        var round = 0;
+
+        /* DOM manipulation elements */
+        const container = document.querySelector('#box');
+        const scores = document.querySelector('#scores');
+        const results = document.querySelector('#results');
+
+        const selection = document.createElement('div');
+        selection.classList.add('content');
+        
+        const score = document.createElement('div');
+        score.classList.add('content');
+
+        /*button handlers and actions*/
+        var btn = document.querySelectorAll('button');
+        btn.forEach((button) => {
+            button.addEventListener('click', () => {
+                playRound(button.value);
+            });
+        });
+
+        /*CPU selection */
+        function computerPlay() {
+            var selection = Math.floor(Math.random() * Math.floor(3));
+            if (selection === 0){
+                return "rock"
+            } else if (selection === 1){
+                return "paper"
+            } else {
+                return "scissors"
+            }
+        }
+
+        /* one round */
+
+        function playRound(playerSelection) {
+            round ++;
+            var computerSelection = computerPlay();
+
+            if (playerSelection == "rock" && computerSelection == "scissors") {
+                playerScore ++
+            } else if (playerSelection == "paper" && computerSelection == "rock"){
+                playerScore ++
+            } else if (playerSelection == "scissors" && computerSelection == "paper"){
+                playerScore ++
+            } else if (playerSelection == computerSelection) {
+            } else {
+                computerScore ++
+            };
+
+        selection.textContent = `You chose ${playerSelection}, the computer chose ${computerSelection}.`;
+        score.textContent = `Rounds: ${round}. Computer score: ${computerScore}. Player score: ${playerScore}`;
+        
+        container.appendChild(selection);
+        scores.appendChild(score);
+
+        /* winner of game */
+        if (playerScore === 5) {
+            alert ("You won!");
+        } else if (computerScore === 5){
+            alert ("You lose!");
+        }
+    }
+
+        
+
+    </script>
+</body>
+</html>
